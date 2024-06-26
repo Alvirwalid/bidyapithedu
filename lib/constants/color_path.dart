@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+
+class ColorPath {
+  static const kPrimaryColor = Color(0xff17A2B8);
+  static const kAccentColor = Color(0xff128297);
+
+  static const kBlack = Colors.black;
+  static const kRed = Colors.red;
+  static const kGreenWhite = Color(0xffEDF8EC);
+  static const kWhite = Colors.white;
+  static const kGreenLightest = Color(0xffDBF1DA);
+  static const kGreenLight = Color(0xffA5DCA2);
+  static const kGreenMain = Color(0xff2B8C44);
+  static const kGreenDark = Color(0xff215F53);
+  static const kGreenBlack = Color(0xff164038);
+  static var kBlueWhite = Colors.blue.shade50;
+  static var kBlueLightest = Colors.blue.shade100;
+  static var kBlueLight = Colors.blue.shade300;
+  static const kBlueMain = Colors.blue;
+  static var kBlueDark = Colors.blue.shade700;
+  static var kBlueBlack = Colors.blue.shade900;
+  static const kRedWhite = Color(0xffFEE7EB);
+  static const kRedLightest = Color(0xffFCCFD7);
+  static const kRedLight = Color(0xffF8869B);
+  static const kRedMain = Color(0xffF20F38);
+  static const kRedDark = Color(0xffD90D1E);
+  static const kRedBlack = Color(0xffBF0426);
+  static const kYellowWhite = Color(0xffFFFAE6);
+  static const kYellowLightest = Color(0xffFFF5CC);
+  static const kYellowLight = Color(0xffFFEFB3);
+  static const kYellowMain = Color(0xffFEE067);
+  static const kYellowDark = Color(0xffFECB01);
+  static const kYellowBlack = Color(0xffCCA300);
+  static var kOrangeWhite = Colors.deepOrange.shade50;
+  static var kOrangeLightest = Colors.deepOrange.shade100;
+  static var kOrangeLight = Colors.deepOrange.shade300;
+  static var kOrangeMain = Colors.deepOrange;
+  static var kOrangeDark = Colors.deepOrange.shade700;
+  static var kOrangeBlack = Colors.deepOrange.shade900;
+  static const kGreyWhite = Color(0xffFFFFFF);
+  static const kGreyLightest = Color(0xffF7F7F7);
+  static const kGreyLight = Color(0xffD9D9D9);
+  static const kGreyMain = Color(0xff999999);
+  static const kGreyDark = Color(0xff666666);
+  static const kGreyBlack = Color(0xff1A1A1A);
+  static const kColorGrey1 = Color(0xff404040);
+  static const kColorGrey2 = Color(0xff595959);
+  static const kColorGrey3 = Color(0xff8c8c8c);
+  static const kColorGrey4 = Color(0xffD9D9D9);
+  static const kColorGrey5 = Color(0xffF2F2F2);
+  static const kColorGrey6 = Color(0xfff7f7f7);
+  static const kNavyLightest = Color(0xffEEEDF7);
+  static const kNavyLight = Color(0xffDDDBF0);
+  static const kButtonColorGradient1 = Color.fromRGBO(143, 148, 251, 1);
+  static const kButtonColorGradient2 = Color.fromRGBO(143, 148, 251, .6);
+}
