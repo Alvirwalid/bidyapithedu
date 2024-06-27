@@ -1,3 +1,4 @@
+import 'package:bidyapithedu/features/views/employee/add_employeeInfo_page.dart';
 import 'package:bidyapithedu/features/views/home_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class SwitchLoginPage extends GetView<AuthController> {
       init: AuthController(),
       builder: (_) {
         if (_.isLogging.isTrue) {
-          return const HomePage();
+          return  AddEmployeeInfoPage();
         } else {
           return const LoginPage();
         }

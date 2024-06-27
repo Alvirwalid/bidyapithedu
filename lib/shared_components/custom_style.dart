@@ -35,7 +35,7 @@ class CustomStyle {
         floatingLabelBehavior ? FloatingLabelBehavior.always : null,
         hintText: hintText,
         hintStyle: hintTextStyle ??
-        CustomStyle.kCustomTextStyle(color: ColorPath.kGreyMain, fontSize: 12,),
+        CustomStyle.kCustomTextStyle(color: ColorPath.kGreyMain, fontSize: OtherConstant.kMediumTextSize,),
         label:label,
         contentPadding:contentPadding??EdgeInsets.symmetric(horizontal:16, vertical: 14),
         enabledBorder: border ??OutlineInputBorder(borderRadius:BorderRadius.circular(10)),

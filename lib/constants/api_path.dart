@@ -12,4 +12,24 @@ class ApiPath {
   static const String urlSignUp = 'api/public/sya/app-user';
 
 
+  ///////////// EMP INFO //////////////
+  static const String urlGetUserInfo = 'api/private/admin/emp-info/get-by-app-user-id';
+
+
+  //////// SETUP SETUP DETAILS ///////////////
+
+  static const String urlGetDropDownListByDevCode = 'api/private/common/setup-details/get-by-dev-code/6';
+  static const String urlGetDropDownListByDevCodeAndParentID = 'api/private/common/setup-details/get-by-dev-code-and-parent-id/31/758';
+  static const String urlGetOfficeDropDownList = 'api/private/common/setup-details/get-office-dropdown-list';
+  static const String urlGetDesignationDropDownList = 'api/private/common/setup-details/get-designation-by-office-id/8';
+
+  //////////// SAVE EMP INFO /////////////
+  static const String urlSavePersonalInfo = 'api/private/admin/emp-info';
+
+  //////////// SAVE EMP OFFICIAL INFO /////////////
+  static const String urlSaveOfficialInfo = 'api/private/admin/emp-office-info';
+
+
+
+
 }

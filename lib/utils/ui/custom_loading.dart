@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../constants/asset_path.dart';
@@ -15,21 +16,33 @@ class CustomLoading {
         // margin: margin ?? const EdgeInsets.symmetric(vertical: 100),
           height: height ?? OtherConstant.kDefaultImageHeight,
           width: width ?? OtherConstant.kDefaultImageHeight,
-          decoration:  const BoxDecoration(image:DecorationImage(image:  AssetImage(AssetPath.logo),scale: 1.5),
-              shape: BoxShape.circle, color: ColorPath.kGreyWhite),
-          child: const CircularProgressIndicator()));
+          // decoration:  const BoxDecoration(image:DecorationImage(image:  AssetImage(AssetPath.logo),scale: 1.5),
+          //     shape: BoxShape.circle, color: ColorPath.kGreyWhite),
+          child: Lottie.asset('assets/icons/loading_animation.json')
+      ));
 
 
 
   static loadingDialog() => Get.dialog(
+    useSafeArea:true,
+
       Center(
-          child: Container(
-              height:OtherConstant.kDefaultImageHeight,
-              width: OtherConstant.kDefaultImageHeight,
+          child:
+          Container(
+            height: OtherConstant.kMediumIconSize*4,
+              width: OtherConstant.kMediumIconSize*4,
               decoration: const BoxDecoration(
-                  image:DecorationImage(image:  AssetImage(AssetPath.logo),scale: 1.5),
+                  // image:DecorationImage(
+                  //     image:  AssetImage(AssetPath.logo),
+                  // ),
                   shape: BoxShape.circle, color: ColorPath.kGreyWhite),
-              child: const CircularProgressIndicator())),
+              child:  Lottie.asset('assets/icons/loading_animation.json',
+                width: 150,
+                height: 150,
+                fit: BoxFit.fill,
+              )
+          )
+      ),
       barrierDismissible: false);
 
 

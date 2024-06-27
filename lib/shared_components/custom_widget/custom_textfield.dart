@@ -38,7 +38,7 @@ class CustomTextField {
         TextInputType? textInputType}) {
     return TextFormField(
       enabled: enable,
-      style: textStyle??CustomStyle.kCustomTextStyle(fontSize: 12),
+      style: textStyle??CustomStyle.kCustomTextStyle(fontSize: OtherConstant.kMediumTextSize),
       controller: controller,
       validator: validator,
       readOnly: readOnly,

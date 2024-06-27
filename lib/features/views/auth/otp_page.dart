@@ -31,7 +31,7 @@ class _OTPPageState extends State<OTPPage> {
 
   FocusNode textForthFocusNode = FocusNode();
 
-  int _start = 30;
+  int _start = 5;
 
   Timer? _timer;
 
@@ -53,7 +53,7 @@ class _OTPPageState extends State<OTPPage> {
   }
 
   void startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 60), (timer) {
       if (_start == 0) {
         setState(() {
           timer.cancel();
@@ -181,7 +181,7 @@ class _OTPPageState extends State<OTPPage> {
                     ),
                     SizedBox(height: OtherConstant.kLargePadding,),
                     Text(
-                      '$_start seconds remaining',
+                      '$_start minutes remaining',
                       textAlign: TextAlign.center,
                       style: CustomStyle.kCustomTextStyle(fontWeight: FontWeight.w600),
                     ),

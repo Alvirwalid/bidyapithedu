@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:bidyapithedu/constants/color_path.dart';
+import 'package:bidyapithedu/constants/other_constant.dart';
 import 'package:bidyapithedu/features/model/opt_model.dart';
 import 'package:bidyapithedu/features/views/auth/login_page.dart';
+import 'package:bidyapithedu/features/views/employee/add_employeeInfo_page.dart';
 import 'package:bidyapithedu/features/views/home_page.dart';
 import 'package:bidyapithedu/utils/ui/custom_loading.dart';
 import 'package:flutter/material.dart';
@@ -73,17 +76,22 @@ class AuthController extends GetxController {
     // print(body);
     ApiRequest request = ApiRequest(url: ApiPath.urlLogin, body: body);
     request.postRequest().then((res) {
+      Get.back();
       if (res!.statusCode == 200) {
         Token token = Token.fromJson(jsonDecode(res.body));
         // log(res.body);
         if (token.status == true) {
+
           tokenBox.put('token', token);
 
-          Map<String, dynamic> decodedToken =
-              JwtDecoder.decode(token.data!.token.toString());
-          print(['jwt',decodedToken]);
+          Map<String, dynamic> decodedToken = JwtDecoder.decode(token.data!.token.toString());
+
           ExtractedToken extractedToken = ExtractedToken.fromJson(decodedToken);
-          Get.offAll(() => const HomePage());
+
+          getUser();
+
+          // Get.offAll(() => const HomePage());
+
         } else {
           Get.back();
           Fluttertoast.showToast(msg: token.message.toString());
@@ -98,22 +106,29 @@ class AuthController extends GetxController {
     });
   }
 
-  getUser({id}) {
-    // ApiRequest request = ApiRequest(url: ApiPath.urlUserInfo + id.toString());
-    // request.getRequestWithAuth().then((res) {
-    //   if (res!.statusCode == 200) {
-    //     user.UserInfo userInfo = user.UserInfo.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
-    //     userBox.put('userInfo', userInfo);
-    //     Get.back();
-    //      Get.offAll(() => const MainPage());
-    //   } else {
-    //     Get.back();
-    //     Fluttertoast.showToast(msg: res.reasonPhrase.toString());
-    //   }
-    // }).catchError((e) {
-    //   Get.back();
-    //   print(e);
-    // });
+  getUser() {
+    ApiRequest request = ApiRequest(url: ApiPath.urlGetUserInfo);
+    request.getRequestWithAuth().then((res) {
+      log(res!.body);
+      if (res!.statusCode == 200) {
+        // user.UserInfo userInfo = user.UserInfo.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
+        // userBox.put('userInfo', userInfo);
+
+        if(jsonDecode(res.body)['data']==null){
+          Get.offAll(()=>AddEmployeeInfoPage());
+        }else{
+          print('Dshboard');
+        }
+
+
+      } else {
+        Get.back();
+        Fluttertoast.showToast(msg: res.reasonPhrase.toString());
+      }
+    }).catchError((e) {
+      Get.back();
+      print(e);
+    });
   }
 
 
@@ -154,6 +169,7 @@ class AuthController extends GetxController {
     );
 
   }
+
   verifyingOTP(){
     CustomLoading.loadingDialog();
     var otp =int.parse(otp1.text + otp2.text + otp3.text+otp4.text) ;
@@ -165,6 +181,7 @@ class AuthController extends GetxController {
       Get.back();
       signUp();
     }else{
+      Fluttertoast.showToast(msg:LocalString.otpValidationError,backgroundColor:ColorPath.kRed,fontSize:OtherConstant.kMediumTextSize);
       Get.back();
     }
 
@@ -173,8 +190,6 @@ class AuthController extends GetxController {
   }
 
   signUp(){
-
-
     var body=jsonEncode(
         {
           "id": 0,
