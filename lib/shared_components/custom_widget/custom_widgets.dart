@@ -1,5 +1,5 @@
 
-import 'package:feather_icons/feather_icons.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +13,6 @@ import '../../constants/color_path.dart';
 import '../../constants/local_string.dart';
 import '../../constants/other_constant.dart';
 import '../../features/controller/localization_controller.dart';
-import '../../features/controller/user_controller.dart';
 import 'custom_button.dart';
 import '../custom_style.dart';
 
@@ -623,123 +622,6 @@ class CustomWidgets {
       ),
     );
   }
-
-  GestureDetector _drawerExplorerItem({
-    context,
-    onTap,
-    title,
-    icon,
-    changeLanguage = false,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-            vertical: OtherConstant.kLargePadding,
-            horizontal: OtherConstant.kLargePadding),
-        alignment: Alignment.centerLeft,
-        decoration: CustomStyle.kCustomBoxDecoration(
-            border: const Border(
-                bottom: BorderSide(color: ColorPath.kGreyLight, width: 2.0))),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: ColorPath.kPrimaryColor,
-            ),
-            SizedBox(
-              width: OtherConstant.kRegularPadding,
-            ),
-            Expanded(
-              child: Text(
-                title,
-                style: CustomStyle.kCustomTextStyle(
-                  // fontWeight: FontWeight.w700,
-                  color: ColorPath.kAccentColor,
-                ),
-              ),
-            ),
-            changeLanguage == true
-                ? InkWell(
-                    onTap: () => {
-                      localizationController.isEnglish.value
-                          ? localizationController.changeLanguage(false)
-                          : localizationController.changeLanguage(true)
-                    },
-                    child: Obx(() => Container(
-                          height: OtherConstant.kRegularIconSize,
-                          width: OtherConstant.kExtraLargeIconSize * 2,
-                          decoration: BoxDecoration(
-                              color: ColorPath.kPrimaryColor,
-                              borderRadius: BorderRadius.circular(
-                                  OtherConstant.kLargeRadius)),
-                          child: Stack(
-                            children: [
-                              AnimatedPositioned(
-                                top: 0,
-                                bottom: 0,
-                                right: localizationController.isEnglish.isTrue
-                                    ? null
-                                    : 0,
-                                curve: Curves.easeIn,
-                                duration: const Duration(milliseconds: 300),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          OtherConstant.kRegularPadding),
-                                  child: Center(
-                                    child: FittedBox(
-                                      child: Text(
-                                        LocalString.LANGUAGE.tr,
-                                        style: CustomStyle.kCustomTextStyle(
-                                            color: ColorPath.kGreyWhite,
-                                            height: localizationController
-                                                    .isEnglish.isTrue
-                                                ? 1.0
-                                                : 1.5,
-                                            fontSize:
-                                                OtherConstant.kSmallTextSize,
-                                            fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              AnimatedPositioned(
-                                top: 0,
-                                bottom: 0,
-                                right: localizationController.isEnglish.isTrue
-                                    ? 0
-                                    : null,
-                                curve: Curves.easeIn,
-                                duration: const Duration(milliseconds: 500),
-                                child: Padding(
-                                  padding: EdgeInsets.all(
-                                      OtherConstant.kSmallPadding),
-                                  child: FittedBox(
-                                    child: Container(
-                                      height: OtherConstant.kMediumIconSize,
-                                      width: OtherConstant.kMediumIconSize,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorPath.kGreyWhite,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
-                  )
-                : const SizedBox()
-          ],
-        ),
-      ),
-    );
-  }
-
-
 
 
 static  RichText requiredLabelText({label,isRequire=false}) {

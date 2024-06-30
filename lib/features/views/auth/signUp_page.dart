@@ -1,9 +1,7 @@
-import 'package:animate_do/animate_do.dart';
+
 import 'package:bidyapithedu/constants/other_constant.dart';
 import 'package:bidyapithedu/features/controller/auth_controller.dart';
 import 'package:bidyapithedu/shared_components/custom_widget/custom_textfield.dart';
-import 'package:bidyapithedu/shared_components/custom_widget/custom_widgets.dart';
-import 'package:bidyapithedu/utils/ui/custom_loading.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

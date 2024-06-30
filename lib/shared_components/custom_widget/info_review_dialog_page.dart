@@ -1,9 +1,7 @@
-import 'package:bidyapithedu/constants/asset_path.dart';
+
 import 'package:bidyapithedu/constants/color_path.dart';
 import 'package:bidyapithedu/features/controller/auth_controller.dart';
-import 'package:bidyapithedu/features/views/auth/login_page.dart';
-import 'package:bidyapithedu/shared_components/custom_widget/custom_appbar.dart';
-import 'package:feather_icons/feather_icons.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
