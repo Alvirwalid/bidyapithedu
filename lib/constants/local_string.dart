@@ -21,6 +21,7 @@ class LocalString{
 
   ////////// Auth ////////////////
   static String userId = 'User ID';
+  static String appUserID = 'appUserId';
   static const String Enter_valid_info='Enter valid info';
   static const String Select_valid_info='Select valid info';
   static const String Done_btn='Done';
@@ -29,6 +30,9 @@ class LocalString{
   //Hive Box
   static String TOKEN_BOX = 'token_box';
   static String USER_BOX = 'user_box';
+  static String USERINFO = 'userInfo';
+  static String basic_info_BOX = 'basic_info_box';
+  static String EMP_SAVE_BOX = 'empSave_box';
   static String DONT_HAVE_ACCOUNT='If you don’t have any account, ';
   static String REGISTRATION_BUTTON = 'Sign Up';
 
@@ -114,6 +118,7 @@ static const String forward='Forward';
 static const String solve='Solve';
 static const String receiver='Receiver';
 static const String select_an_item='Select  an item';
+static const String select_an_option='Select  an option';
 static const String type_your_comment='Type your comment';
 
   static const String area='Area';

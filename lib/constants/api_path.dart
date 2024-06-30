@@ -15,13 +15,12 @@ class ApiPath {
   ///////////// EMP INFO //////////////
   static const String urlGetUserInfo = 'api/private/admin/emp-info/get-by-app-user-id';
 
-
   //////// SETUP SETUP DETAILS ///////////////
 
-  static const String urlGetDropDownListByDevCode = 'api/private/common/setup-details/get-by-dev-code/6';
-  static const String urlGetDropDownListByDevCodeAndParentID = 'api/private/common/setup-details/get-by-dev-code-and-parent-id/31/758';
+  static const String urlGetDropDownListByDevCode = 'api/private/common/setup-details/get-by-dev-code/';
+  static const String urlGetDropDownListByDevCodeAndParentID = 'api/private/common/setup-details/get-by-dev-code-and-parent-id/';
   static const String urlGetOfficeDropDownList = 'api/private/common/setup-details/get-office-dropdown-list';
-  static const String urlGetDesignationDropDownList = 'api/private/common/setup-details/get-designation-by-office-id/8';
+  static const String urlGetDesignationDropDownList = 'api/private/common/setup-details/get-designation-by-office-id/';
 
   //////////// SAVE EMP INFO /////////////
   static const String urlSavePersonalInfo = 'api/private/admin/emp-info';

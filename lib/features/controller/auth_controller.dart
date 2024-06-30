@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:bidyapithedu/constants/color_path.dart';
 import 'package:bidyapithedu/constants/other_constant.dart';
+import 'package:bidyapithedu/features/controller/employee_controller.dart';
 import 'package:bidyapithedu/features/model/opt_model.dart';
 import 'package:bidyapithedu/features/views/auth/login_page.dart';
 import 'package:bidyapithedu/features/views/employee/add_employeeInfo_page.dart';
@@ -19,6 +20,8 @@ import '../../confiq/routing/all_route.dart';
 import '../../constants/api_path.dart';
 import '../../constants/local_string.dart';
 import '../../utils/service/api_request.dart';
+import '../model/employee_info.dart';
+import '../model/employee_info_for_save_model.dart';
 import '../model/extracted_token.dart';
 import '../model/sign_up_model.dart';
 import '../model/token.dart';
@@ -26,6 +29,9 @@ import '../views/auth/otp_page.dart';
 import '../views/main_page.dart';
 
 class AuthController extends GetxController {
+   final _employeeController=Get.put(EmployeeController());
+
+
   RxBool showPass = RxBool(true);
   TextEditingController userNameController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -41,12 +47,22 @@ class AuthController extends GetxController {
 
   Rx<OTPModel> otpModel=Rx(OTPModel());
   Rx<SignUpModel> signUpModel=Rx(SignUpModel());
+  Rx<EmployeeInfo> empInfoModel=Rx(EmployeeInfo());
+
 
 
 
   final Box<Token> tokenBox = Hive.box<Token>(LocalString.TOKEN_BOX);
+
+  // final Box<EmployeeInfo> empBox= Hive.box<EmployeeInfo>(LocalString.USER_BOX);
+
+
+
   final box = GetStorage();
   RxBool isLogging = RxBool(false);
+  RxBool isSaveEmpInfo = RxBool(false);
+  RxBool isConfirm = RxBool(false);
+
 
   //// Password validator ////////
   RxBool isConfirmPasswordVisible = RxBool(false);
@@ -63,6 +79,8 @@ class AuthController extends GetxController {
 
   signOut() async {
     await tokenBox.clear();
+    // await empBox.clear();
+
     box.erase();
     Get.offAllNamed(AllRouters.LOGIN_PAGE);
   }
@@ -73,13 +91,14 @@ class AuthController extends GetxController {
       "username": mobileController.text
     });
 
-    // print(body);
     ApiRequest request = ApiRequest(url: ApiPath.urlLogin, body: body);
+
     request.postRequest().then((res) {
+      log(res!.body);
       Get.back();
       if (res!.statusCode == 200) {
         Token token = Token.fromJson(jsonDecode(res.body));
-        // log(res.body);
+
         if (token.status == true) {
 
           tokenBox.put('token', token);
@@ -88,9 +107,11 @@ class AuthController extends GetxController {
 
           ExtractedToken extractedToken = ExtractedToken.fromJson(decodedToken);
 
+          box.write(LocalString.appUserID,extractedToken.userInfo?.id);
+
           getUser();
 
-          // Get.offAll(() => const HomePage());
+
 
         } else {
           Get.back();
@@ -106,20 +127,71 @@ class AuthController extends GetxController {
     });
   }
 
+  signUp(){
+    CustomLoading.loadingDialog();
+
+
+    var body=jsonEncode(
+        {
+          "username": mobileController.text.toString(),
+          "password":passwordController.text.toString(),
+          "displayName":nameController.text.toString(),
+          "email": emailController.text.toString(),
+          "mobile": mobileController.text.toString(),
+          "userTypeId": 2,
+          "userTypeName": "User"
+        }
+    );
+
+
+    // log(body);
+
+
+    ApiRequest apiRequest=ApiRequest(url: ApiPath.urlSignUp,body:body);
+    apiRequest.postRequest(isLoadingScreen:false).then((res){
+      Get.back();
+
+      log(res!.body);
+
+      if(res!.statusCode==200){
+
+        signUpModel.value=SignUpModel.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
+
+        if(signUpModel.value.status==true){
+
+          box.write("password", passwordController.text.toString());
+          box.write("username", mobileController.text.toString());
+          Get.offAll(()=>LoginPage());
+        }else{
+
+          Fluttertoast.showToast(msg:'User name already exist');
+        }
+
+      }
+
+    }).catchError((e){
+      Fluttertoast.showToast(msg: e.toString());
+    });
+  }
+
   getUser() {
     ApiRequest request = ApiRequest(url: ApiPath.urlGetUserInfo);
     request.getRequestWithAuth().then((res) {
+      Get.back();
       log(res!.body);
+
       if (res!.statusCode == 200) {
-        // user.UserInfo userInfo = user.UserInfo.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
-        // userBox.put('userInfo', userInfo);
 
-        if(jsonDecode(res.body)['data']==null){
-          Get.offAll(()=>AddEmployeeInfoPage());
+        // empInfoModel.value=EmployeeInfo.fromJson(jsonDecode(res.body));
+
+        // empBox.put(LocalString.USERINFO, empInfoModel.value);
+
+        if(empInfoModel.value.data ==null){
+          Get.offAll(()=>HomePage());
+
         }else{
-          print('Dshboard');
+          Get.offAll(() => const HomePage());
         }
-
 
       } else {
         Get.back();
@@ -130,7 +202,6 @@ class AuthController extends GetxController {
       print(e);
     });
   }
-
 
   getUserByName({userName}){
     ApiRequest  apiRequest=ApiRequest(url: ApiPath.urlGetUserByName+userName.toString());
@@ -148,14 +219,22 @@ class AuthController extends GetxController {
 
   getOTP({email,name}){
     CustomLoading.loadingDialog();
+
     ApiRequest  apiRequest=ApiRequest(url: '${ApiPath.urlGetOTP}$email/$name');
     apiRequest.getRequest().then((res){
       Get.back();
+      log(res!.body);
+
       if(res!.statusCode == 200){
+
         otpModel.value = OTPModel.fromJson(jsonDecode(res.body));
+
         if(otpModel.value.data != null){
+
           otpController.text = otpModel.value.data!;
+
           Get.to(OTPPage());
+
         }else{
           Fluttertoast.showToast(msg: otpModel.value.message!);
         }
@@ -171,90 +250,112 @@ class AuthController extends GetxController {
   }
 
   verifyingOTP(){
-    CustomLoading.loadingDialog();
+
     var otp =int.parse(otp1.text + otp2.text + otp3.text+otp4.text) ;
+
     int responseOtp=int.parse(otpModel.value.data.toString());
+
     var  dividedOtp=(responseOtp/13).floor();
-    // print(otp);
-    // print(dividedOtp);
-    if(otp==dividedOtp){
-      Get.back();
-      signUp();
+
+
+
+    if(otp.toString()==dividedOtp.toString()){
+        signUp();
     }else{
       Fluttertoast.showToast(msg:LocalString.otpValidationError,backgroundColor:ColorPath.kRed,fontSize:OtherConstant.kMediumTextSize);
       Get.back();
     }
-
-
-
   }
 
-  signUp(){
-    var body=jsonEncode(
-        {
-          "id": 0,
-          "active": true,
-          "passwordPolicyId": 0,
-          "passwordPolicyName": "",
-          "username": mobileController.text,
-          "password": passwordController.text,
-          "displayName": nameController.text,
-          "email": emailController.text,
-          "mobile": mobileController.text,
-          "designation": "",
-          "userTypeId": 2,
-          "userTypeName": "User"
-        }
-    );
 
-    ApiRequest apiRequest=ApiRequest(url: ApiPath.urlSignUp,body:body);
-    apiRequest.postRequest(isLoadingScreen:false).then((res){
-
-      log(res!.body);
-      if(res!.statusCode==200){
-        signUpModel.value=SignUpModel.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
-        if(signUpModel.value.status==true){
-
-          box.write("password", passwordController.text);
-          box.write("username", mobileController.text);
-          Get.offAll(()=>LoginPage());
-        }else{
-          Fluttertoast.showToast(msg: signUpModel.value.message.toString());
-        }
-
-      }
-
-    }).catchError((e){
-      // Fluttertoast.showToast(msg: e.toString());
-    });
-  }
 
 /////////// Helper Method ///////////////
 
 
+  Stream<bool> checkUser() async* {
+
+
+
+    var res = false;
+
+    // if (empBox.isEmpty) {
+    //
+    //   res = false;
+    //
+    // } else {
+    //
+    //
+    //   if (empBox.get('userInfo')?.data == null) {
+    //     res = true;
+    //   }else{
+    //     res = false;
+    //   }
+    // }
+
+    yield res;
+  }
+
+  Stream<bool> checkApproveUser() async* {
+    var res = false;
+
+    // if ( empBox.isEmpty) {
+    //
+    //   res = false;
+    //
+    // } else {
+    //
+    //   if (empBox.get(LocalString.USERINFO)?.data?.confirmIs !=true) {
+    //
+    //     res = true;
+    //
+    //   }else{
+    //     res = false;
+    //   }
+    // }
+
+
+    yield res;
+  }
+
+
 
   Stream<bool> checkLogging() async* {
+
     var res = false;
+
     if (tokenBox.isEmpty) {
+
       res = false;
+
     } else {
+
       if (tokenBox.get('token')?.data?.token != null) {
+
         bool isExpired = JwtDecoder.isExpired('${tokenBox.get('token')?.data?.token!}');
+
         if(isExpired == true){
           res = false;
           signOut();
         }else{
+
           res = true;
         }
 
       }
     }
+
+
+
     yield res;
   }
+
+
 
   @override
   void onInit() {
     super.onInit();
     isLogging.bindStream(checkLogging());
+    isSaveEmpInfo.bindStream(checkUser());
+    // isConfirm.bindStream(checkApproveUser());
   }
 }

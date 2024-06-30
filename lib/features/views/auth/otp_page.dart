@@ -31,7 +31,7 @@ class _OTPPageState extends State<OTPPage> {
 
   FocusNode textForthFocusNode = FocusNode();
 
-  int _start = 5;
+  int _start = 10;
 
   Timer? _timer;
 
@@ -54,7 +54,7 @@ class _OTPPageState extends State<OTPPage> {
 
   void startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 60), (timer) {
-      if (_start == 0) {
+      if (_start == 1) {
         setState(() {
           timer.cancel();
         });

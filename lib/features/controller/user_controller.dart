@@ -6,14 +6,10 @@ import 'package:http_parser/http_parser.dart';
 
 import '../../constants/local_string.dart';
 import '../model/extracted_token.dart';
+import '../model/token.dart';
 
 class UserController extends GetxController {
-  // Box<UserInfo> userBox = Hive.box<UserInfo>(LocalString.USER_BOX);
-  // Box<Token> tokenBox = Hive.box<Token>(LocalString.TOKEN_BOX);
-  // UserInfo? get getUserInfo => userBox.get('userInfo');
+
   
-
-
-
 
 }

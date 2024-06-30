@@ -205,10 +205,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 CustomButton.customButton(
                     onTap:() {
                       if(_formKey.currentState!.validate()){
-                        print("Trueeeeeeeeeeeeeeee");
+
                         _authController.getOTP(email: _authController.emailController.text,name: _authController.nameController.text);
                       }else{
-                        print("Falseeeeeeeeeeee");
+
 
                       }
                   },

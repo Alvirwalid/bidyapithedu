@@ -2,6 +2,7 @@
 import 'package:bidyapithedu/features/views/auth/otp_page.dart';
 import 'package:bidyapithedu/features/views/auth/signUp_page.dart';
 import 'package:bidyapithedu/features/views/home_page.dart';
+import 'package:bidyapithedu/shared_components/custom_widget/info_review_dialog_page.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import '../../features/views/auth/login_page.dart';
@@ -25,6 +26,10 @@ class Pages {
     GetPage(
       name: AllRouters.SIGN_UP_PAGE,
       page: () => const SignUpPage(),
+    ),
+    GetPage(
+      name: AllRouters.SIGN_UP_PAGE,
+      page: () =>  InfoReviewDialogPage(),
     ),
   ];
 }

@@ -1,3 +1,5 @@
+
+import 'package:bidyapithedu/features/model/employee_info.dart' as emp_info;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,10 +19,26 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await GetStorage.init();
+
+  ////////////////// HIVE ADAPTER /////////////////
+
   Hive.registerAdapter(token.TokenAdapter());
   Hive.registerAdapter(token.DataAdapter());
   Hive.registerAdapter(token.PasswordPolicyAdapter());
+
+
+
+
+
+
+
+  ///////////// Hive Box Initialize //////////////
+
   await Hive.openBox<token.Token>(LocalString.TOKEN_BOX);
+
+
+
+
   runApp( MyApp());
 }
 

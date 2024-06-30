@@ -101,8 +101,8 @@ class CustomButton {
             borderRadius: BorderRadius.circular(OtherConstant.kRegularRadius),
             gradient: const LinearGradient(
                 colors: [
-                  ColorPath.kButtonColorGradient1,
-                  ColorPath.kButtonColorGradient2,
+                  ColorPath.kPrimaryColor,
+                  ColorPath.kPrimaryColor,
                 ]
             )
         ),

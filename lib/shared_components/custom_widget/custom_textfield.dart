@@ -108,7 +108,7 @@ class CustomTextField {
         Color?borerColor,
         InputDecoration? decoration}) {
     return DropdownButtonFormField(
-      alignment: alignment ?? Alignment.topLeft,
+      // alignment: alignment ?? Alignment.topLeft,
       value: selectValue,
       style: CustomStyle.kCustomTextStyle(),
       onChanged: onChanged,

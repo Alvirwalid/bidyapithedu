@@ -739,7 +739,31 @@ class CustomWidgets {
     );
   }
 
-  /// For using dropdown on any page we can use this
+
+
+
+static  RichText requiredLabelText({label,isRequire=false}) {
+    return RichText(
+        text:TextSpan(
+            children: [
+              TextSpan(
+                  text:label,
+                  style: CustomStyle.kCustomTextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: OtherConstant.kRegularTextSize
+                  )
+              ),
+              TextSpan(
+                  text:  isRequire?'*':'',
+                  style: CustomStyle.kCustomTextStyle(
+                      color: ColorPath.kRed,
+                      fontSize: OtherConstant.kRegularTextSize.sp
+                  )
+              )
+            ]
+        )
+    );
+  }
 
 
 
